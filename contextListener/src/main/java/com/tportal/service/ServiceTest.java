@@ -2,25 +2,26 @@ package com.tportal.service;
 
 /**
  * Exemple de service
- * @author seb0ui
  *
  */
 public class ServiceTest extends Service<Test> {
 	
 	/**
-	 * Nom du service implémenté
+	 * Nom du service implÃ©mentÃ©
 	 */
 	public static final String TEST = "test";
 
 	/**
 	 * 
 	 */
+	@SuppressWarnings("rawtypes")
 	static Service serviceTest;
 	
 	/**
-	 * Récupération du singleton
+	 * RÃ©cupÃ©ration du singleton
 	 * @return L'interface Test
 	 */
+	@SuppressWarnings("unchecked")
 	synchronized public static Test getInstance() {
 		if (serviceTest == null) {
 			serviceTest = new ServiceTest();
@@ -30,7 +31,7 @@ public class ServiceTest extends Service<Test> {
 	}
 	
 	/**
-	 * Réinitialise le singleton, nécessaire afin de changer l'implémentation
+	 * RÃ©initialise le singleton, nÃ©cessaire afin de changer l'implÃ©mentation
 	 * de celui-ci
 	 */
 	public static void init() {

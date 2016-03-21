@@ -5,8 +5,8 @@ import java.lang.reflect.Method;
 
 /**
  * La classe serviceHandler sert de proxy au service.
- * Il gère le mécanisme de changement de classLoader et d'invocation
- * de la méthode attendu sur l'implémentation du service.
+ * Il gÃ¨re le mÃ©canisme de changement de classLoader et d'invocation
+ * de la mÃ©thode attendu sur l'implÃ©mentation du service.
  * @author seb0uil
  *
  */

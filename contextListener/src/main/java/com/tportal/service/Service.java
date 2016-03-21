@@ -7,10 +7,10 @@ import java.util.Map;
 import javax.servlet.ServletContext;
 
 /**
- * la classe Service sert de classe parente aux différentes implémentations pour
+ * la classe Service sert de classe parente aux diffÃ©rentes implÃ©mentations pour
  * les services (cf. ServiceTest.java).
- * Celle-ci, à partir de la map {@link #services}, récupère les éléments nécessaires à la constitution
- * du proxy pour l'appel de l'implémentation du service.
+ * Celle-ci, Ã  partir de la map {@link #services}, rÃ©cupÃ¨re les Ã©lÃ©ments nÃ©cessaires Ã  la constitution
+ * du proxy pour l'appel de l'implÃ©mentation du service.
  * @author seb0uil
  *
  * @param <T>
@@ -21,14 +21,14 @@ public class Service<T> {
 	
 	/**
 	 * Map de correspondance entre les noms des service et les serviceLoader.
-	 * Chaque service doit être enregistré pour être accessible, et une entrée est donc
-	 * créée dans la map.
+	 * Chaque service doit Ãªtre enregistrÃ© pour Ãªtre accessible, et une entrÃ©e est donc
+	 * crÃ©Ã©e dans la map.
 	 */
 	private static Map<String, ServiceLoader> services = new HashMap<String, ServiceLoader>();
 	
 	/**
-	 * Définie l'interface du service et le nom de celui-ci
-	 * Le nom permet de retrouver l'implémentation et le context de l'interface
+	 * DÃ©finie l'interface du service et le nom de celui-ci
+	 * Le nom permet de retrouver l'implÃ©mentation et le context de l'interface
 	 * @param clazz
 	 * @param serviceName
 	 */
@@ -48,42 +48,42 @@ public class Service<T> {
 
 	
 	/**
-	 * Génère le proxy pour accéder à l'implémentation attendu du service
+	 * GÃ©nÃ¨re le proxy pour accÃ©der Ã  l'implÃ©mentation attendu du service
 	 * @param clazz interface du service
 	 * @param serviceName
-	 * @return Un proxy à destination de l'implémentation du service
+	 * @return Un proxy Ã  destination de l'implÃ©mentation du service
 	 */
 	@SuppressWarnings("unchecked")
 	public T getProxy(Class<T> clazz, String serviceName) {
 		T service = (T) Proxy.newProxyInstance(
 				Service.class.getClassLoader(),
 				new Class[] { clazz },
-				new ServiceHandler(services.get(serviceName).getTargetServiceClassLoader(),
-						services.get(serviceName).getClassName())
+				new ServiceHandler(Service.getService(serviceName).getTargetServiceClassLoader(),
+						Service.getService(serviceName).getClassName())
 				);
 		return service;
 	}
 
 	/**
-	 * Enregistre un service et son implémentation
+	 * Enregistre un service et son implÃ©mentation
 	 * @param serviceName
 	 * @param className
 	 * @param servletContext
 	 */
 	public static void addService(String serviceName, String className, ServletContext servletContext) {
 		ServiceLoader sl = new ServiceLoader(className, servletContext);
-		services.put(serviceName, sl);
+		Service.addService(serviceName, sl);
 	}
 
 	/**
-	 * ServiceLoader utilisé pour stocker la classe implémentant le service ainsi que le context
-	 * dans lequel cette implémentation est disponible.
+	 * ServiceLoader utilisÃ© pour stocker la classe implÃ©mentant le service ainsi que le context
+	 * dans lequel cette implÃ©mentation est disponible.
 	 * @author SBE10599
 	 *
 	 */
 	private static class ServiceLoader {
 		/**
-		 * fqdn de la classe implémentant le service
+		 * fqdn de la classe implÃ©mentant le service
 		 */
 		String className;
 		/**
@@ -104,5 +104,13 @@ public class Service<T> {
 		public ClassLoader getTargetServiceClassLoader() {
 			return targetServiceClassLoader;
 		}
+	}
+	
+	public static void addService(String serviceName, ServiceLoader loader) {
+		services.put(serviceName, loader);
+	}
+	
+	public static ServiceLoader getService(String serviceName) {
+		return services.get(serviceName);
 	}
 }

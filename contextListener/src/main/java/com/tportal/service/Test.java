@@ -1,8 +1,7 @@
 package com.tportal.service;
 
 /**
- * Interface définissant le service
- * @author seb0uil
+ * Interface dÃ©finissant le service
  *
  */
 public interface Test {
