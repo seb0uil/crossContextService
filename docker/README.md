@@ -6,3 +6,13 @@ just
 ```
 docker build -t seb0uil/crossContextService .
 ```
+
+After that, you can start the container using
+```
+docker run -p 8080:8080 seb0uil/crossContextService
+```
+
+Then, you can test it on 
+```
+http://127.0.0.1:8080/crossContextClient
+```
